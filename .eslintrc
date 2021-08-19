@@ -1,0 +1,30 @@
+{
+    "env": {
+        "es2021": true,
+        "node": true,
+        "react-native/react-native": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "react-native"
+    ],
+    "rules": {
+        "brace-style": ["error", "1tbs"],
+        "no-plusplus": ["error", { "allowForLoopAfterthoughts" : true }],
+        "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+        "no-underscore-dangle": ["error", { "allow": ["_id"] }],
+        "no-console": ["error", { "allow": ["warn", "error"] }],
+        "react/style-prop-object":  ["error", { "allow": ["StatusBar"] }]
+    }
+}
