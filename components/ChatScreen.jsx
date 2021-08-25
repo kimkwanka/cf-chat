@@ -21,10 +21,8 @@ if (!firebase.apps.length) {
 }
 
 const ChatScreen = ({ navigation, route: { params: { name, bgCol } } }) => {
-  const [state, setState] = useState({
-    messages: [],
-    user: {},
-  });
+  const [chatMessages, setChatMessages] = useState([]);
+  const [chatUser, setChatUser] = useState({ _id: null, avatar: 'https://placeimg.com/140/140/any', name });
 
   const firebaseMessagesRef = useRef(null);
 
@@ -43,8 +41,7 @@ const ChatScreen = ({ navigation, route: { params: { name, bgCol } } }) => {
         user,
       });
     });
-
-    setState({ ...state, messages });
+    setChatMessages(messages);
   };
 
   useEffect(() => {
@@ -56,12 +53,10 @@ const ChatScreen = ({ navigation, route: { params: { name, bgCol } } }) => {
       if (!user) {
         firebase.auth().signInAnonymously();
       }
-      setState({
-        ...state,
-        user: {
-          ...state.user,
-          _id: user.uid,
-        },
+      setChatUser({
+        ...chatUser,
+        _id: user.uid,
+
       });
     });
 
@@ -81,10 +76,7 @@ const ChatScreen = ({ navigation, route: { params: { name, bgCol } } }) => {
       firebaseMessagesRef.current.add(msg);
     });
 
-    setState((previousState) => ({
-      user: previousState.user,
-      messages: GiftedChat.append(previousState.messages, messages),
-    }));
+    setChatMessages((previousState) => (GiftedChat.append(previousState.messages, messages)));
   };
 
   // Customize user's speech bubble
@@ -101,14 +93,16 @@ const ChatScreen = ({ navigation, route: { params: { name, bgCol } } }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: '#fff' }}>
+      { chatUser._id && (
       <GiftedChat
-        messages={state.messages}
+        messages={chatMessages}
         onSend={(messages) => onSend(messages)}
-        user={state.user}
+        user={chatUser}
         renderBubble={renderBubble}
         showUserAvatar
         renderUsernameOnMessage
       />
+      )}
       { Platform.OS === 'android' && <KeyboardAvoidingView behavior="height" /> }
     </View>
   );
