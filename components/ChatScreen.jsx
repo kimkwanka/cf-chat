@@ -52,12 +52,12 @@ const ChatScreen = ({ navigation, route: { params: { name, bgCol } } }) => {
     const authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
         firebase.auth().signInAnonymously();
+      } else {
+        setChatUser({
+          ...chatUser,
+          _id: user.uid,
+        });
       }
-      setChatUser({
-        ...chatUser,
-        _id: user.uid,
-
-      });
     });
 
     // Init Firebase
