@@ -1,4 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import React from 'react';
 
 import { LogBox } from 'react-native';
@@ -13,27 +14,29 @@ import ChatScreen from './components/ChatScreen';
 
 // https://stackoverflow.com/questions/44603362/setting-a-timer-for-a-long-period-of-time-i-e-multiple-minutes
 if (LogBox) {
-LogBox.ignoreLogs(['Setting a timer']);
+  LogBox.ignoreLogs(['Setting a timer']);
 }
 
 const Stack = createStackNavigator();
 
 const App = () => (
-  <NavigationContainer>
-    <StatusBar style="auto" />
-    <Stack.Navigator
-      initialRouteName="Screen1"
-    >
-      <Stack.Screen
-        name="Start"
-        component={StartScreen}
-      />
-      <Stack.Screen
-        name="Chat"
-        component={ChatScreen}
-      />
-    </Stack.Navigator>
-  </NavigationContainer>
+  <ActionSheetProvider>
+    <NavigationContainer>
+      <StatusBar style="auto" />
+      <Stack.Navigator
+        initialRouteName="Screen1"
+      >
+        <Stack.Screen
+          name="Start"
+          component={StartScreen}
+        />
+        <Stack.Screen
+          name="Chat"
+          component={ChatScreen}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  </ActionSheetProvider>
 );
 
 export default App;
