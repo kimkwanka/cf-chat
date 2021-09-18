@@ -4,6 +4,8 @@ import {
   View, Platform, KeyboardAvoidingView,
 } from 'react-native';
 
+import PropTypes from 'prop-types';
+
 import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat';
 
 import MapView from 'react-native-maps';
@@ -247,4 +249,15 @@ const ChatScreen = ({ navigation, route: { params: { name, bgCol } } }) => {
   );
 };
 
+ChatScreen.propTypes = {
+  navigation: PropTypes.shape({
+    setOptions: PropTypes.func.isRequired,
+  }).isRequired,
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      name: PropTypes.string,
+      bgCol: PropTypes.string,
+    }).isRequired,
+  }).isRequired,
+};
 export default ChatScreen;

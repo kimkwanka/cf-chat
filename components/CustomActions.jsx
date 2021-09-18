@@ -126,4 +126,9 @@ const CustomActions = ({ onSend }) => {
   );
 };
 
+CustomActions.propTypes = {
+  onSend: PropTypes.func.isRequired,
+  uploadImage: PropTypes.func.isRequired,
+};
+
 export default CustomActions;
