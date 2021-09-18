@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import {
   View, TouchableOpacity, Text, StyleSheet,
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const CustomActions = ({ onSend }) => {
+const CustomActions = ({ onSend, uploadImage }) => {
   const { showActionSheetWithOptions } = useActionSheet();
 
   const pickImage = async () => {
@@ -41,11 +42,14 @@ const CustomActions = ({ onSend }) => {
     if (status === 'granted') {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: 'Images',
-      }).catch((error) => console.log(error));
+      }).catch((error) => console.error(error));
 
       if (!result.cancelled) {
-        onSend({ image: result.uri });
-        console.log(result);
+        const imageURL = await uploadImage(result.uri);
+        if (imageURL) {
+          console.log(imageURL);
+          onSend({ image: imageURL });
+        }
       }
     }
   };
@@ -54,10 +58,14 @@ const CustomActions = ({ onSend }) => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (status === 'granted') {
-      const result = await ImagePicker.launchCameraAsync({}).catch((error) => console.log(error));
+      const result = await ImagePicker.launchCameraAsync({}).catch((error) => console.error(error));
 
       if (!result.cancelled) {
-        onSend({ image: result.uri });
+        const imageURL = await uploadImage(result.uri);
+        if (imageURL) {
+          console.log(imageURL);
+          onSend({ image: imageURL });
+        }
       }
     }
   };
@@ -68,7 +76,7 @@ const CustomActions = ({ onSend }) => {
     if (status === 'granted') {
       // https://github.com/expo/expo/issues/5504#issuecomment-913354765
       const result = await Location.getCurrentPositionAsync({ accuracy: 1 })
-        .catch((error) => console.log(error));
+        .catch((error) => console.error(error));
 
       if (result) {
         const { latitude, longitude } = result.coords;

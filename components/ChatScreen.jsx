@@ -14,10 +14,11 @@ import NetInfo from '@react-native-community/netinfo';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import CustomActions from './CustomActions';
+import firebase from 'firebase';
+import 'firebase/firestore';
+import 'firebase/storage';
 
-const firebase = require('firebase');
-require('firebase/firestore');
+import CustomActions from './CustomActions';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCfKogTpqBqCIv60DMiw7i6dUnHFv2UUt4',
@@ -33,13 +34,34 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-const removeMessagesFromStorage = async () => {
+const uploadImage = async (uri) => {
+  const imageNameBefore = uri.split('/');
+  const imageName = imageNameBefore[imageNameBefore.length - 1];
+
+  const storageRef = firebase.storage().ref().child(`images/${imageName}`);
+
+  const response = await fetch(uri);
+  const blob = await response.blob();
+
+  let imageURL = '';
+
   try {
-    await AsyncStorage.removeItem('messages');
-  } catch (error) {
-    console.error(error.message);
+    const snapshot = await storageRef.put(blob);
+    imageURL = await snapshot.ref.getDownloadURL();
+  } catch (err) {
+    console.error(err);
   }
+
+  return imageURL;
 };
+
+// const removeMessagesFromStorage = async () => {
+//   try {
+//     await AsyncStorage.removeItem('messages');
+//   } catch (error) {
+//     console.error(error.message);
+//   }
+// };
 
 const loadUserIDFromStorage = async () => {
   try {
@@ -205,7 +227,7 @@ const ChatScreen = ({ navigation, route: { params: { name, bgCol } } }) => {
       )
       : null);
 
-  const renderCustomActions = (props) => <CustomActions {...props} />;
+  const renderCustomActions = (props) => <CustomActions {...props} uploadImage={uploadImage} />;
 
   const renderCustomView = ({ currentMessage }) => {
     if (currentMessage.location) {
@@ -260,4 +282,5 @@ ChatScreen.propTypes = {
     }).isRequired,
   }).isRequired,
 };
+
 export default ChatScreen;
