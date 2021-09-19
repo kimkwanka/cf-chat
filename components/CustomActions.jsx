@@ -124,6 +124,10 @@ const CustomActions = ({ onSend, uploadImage }) => {
 
   return (
     <TouchableOpacity
+      accessible
+      accessibilityLabel="More options"
+      accessibilityHint="Let’s you choose to send an image, photo or your geolocation."
+      accessibilityRole="button"
       style={[styles.container]}
       onPress={() => onActionPress()}
     >
