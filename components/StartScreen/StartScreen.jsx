@@ -1,7 +1,10 @@
+/* eslint-disable global-require */
 import React, { useState } from 'react';
 import {
   StyleSheet, View, Text, TextInput, Pressable, ImageBackground,
 } from 'react-native';
+
+import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
   pageContent: {
@@ -110,11 +113,15 @@ const StartScreen = ({ navigation }) => {
     );
   };
 
+  ColorButton.propTypes = {
+    color: PropTypes.string.isRequired,
+  };
+
   return (
     <View style={styles.pageContent}>
-      <ImageBackground style={styles.bgImg} source={require('../assets/background.png')}>
+      <ImageBackground style={styles.bgImg} source={require('../../assets/background.png')}>
         <View style={styles.upperHalf}>
-          <Text style={styles.appTitle}>App Title</Text>
+          <Text style={styles.appTitle}>CF Chat</Text>
         </View>
         <View style={styles.floatingBox}>
           <TextInput
@@ -142,6 +149,12 @@ const StartScreen = ({ navigation }) => {
       </ImageBackground>
     </View>
   );
+};
+
+StartScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default StartScreen;

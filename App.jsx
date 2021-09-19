@@ -9,8 +9,8 @@ import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import StartScreen from './components/StartScreen';
-import ChatScreen from './components/ChatScreen';
+import StartScreen from './components/StartScreen/StartScreen';
+import ChatScreen from './components/ChatScreen/ChatScreen';
 
 // https://stackoverflow.com/questions/44603362/setting-a-timer-for-a-long-period-of-time-i-e-multiple-minutes
 if (LogBox) {
