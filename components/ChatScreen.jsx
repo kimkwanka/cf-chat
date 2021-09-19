@@ -18,16 +18,20 @@ import firebase from 'firebase';
 import 'firebase/firestore';
 import 'firebase/storage';
 
+import {
+  API_KEY, AUTH_DOMAIN, DATABASE_URL, PROJECT_ID, STORAGE_BUCKET, MESSAGING_SENDER_ID, APP_ID,
+// eslint-disable-next-line import/no-unresolved
+} from '@env';
 import CustomActions from './CustomActions';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyCfKogTpqBqCIv60DMiw7i6dUnHFv2UUt4',
-  authDomain: 'cf-chat-e2c85.firebaseapp.com',
-  databaseURL: 'https://cf-chat-e2c85-default-rtdb.europe-west1.firebasedatabase.app',
-  projectId: 'cf-chat-e2c85',
-  storageBucket: 'cf-chat-e2c85.appspot.com',
-  messagingSenderId: '945221760315',
-  appId: '1:945221760315:web:f16778cfab0aadc236331e',
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
+  databaseURL: DATABASE_URL,
+  projectId: PROJECT_ID,
+  storageBucket: STORAGE_BUCKET,
+  messagingSenderId: MESSAGING_SENDER_ID,
+  appId: APP_ID,
 };
 
 if (!firebase.apps.length) {
