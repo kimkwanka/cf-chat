@@ -1,6 +1,6 @@
 # CF-Chat
 
-A React Native messenger app inspired by the likes of Whatsapp and co.
+A React Native messenger app inspired by the likes of Whatsapp and Co.
 
 ## Built With
 - [React Native](https://reactnative.dev/)
